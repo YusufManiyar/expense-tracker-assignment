@@ -59,8 +59,10 @@ function createExpenseForm({id, expense, des}) {
             expenseObj = JSON.parse(localStorage.getItem(id))
             expenseObj.expense = `${expenseInput.value}`
             expenseObj.des =  `${descriptionInput.value}`
+            localStorage.removeItem(expenseObj.id)
             localStorage.setItem(id,JSON.stringify(expenseObj))
             li = document.getElementById(`${id}`)
+            $(`#modal-${expenseObj.id}`).modal('hide')
             li.textContent = `${expenseObj.expense} : ${expenseObj.des}`
             li.appendChild(createModal(createExpenseForm(expenseObj)))
             $(`#modal-${expenseObj.id}`).modal('show');
@@ -117,8 +119,8 @@ function removeItem(e){
 function editItem(e){
     if(e.target.classList.contains('edit')){
         let li = e.target.parentElement;
-        let data = JSON.parse(localStorage.getItem(li.value))
-        console.log('editItem', `#modal-${data.id}`)
+        console.log(e.target.parentElement.id)
+        let data = JSON.parse(localStorage.getItem(li.id))
         $(`#modal-${data.id}`).modal('show');
     }
 }
@@ -151,7 +153,10 @@ function createModal(form) {
     closeButton.className = 'close';
     closeButton.setAttribute('data-dismiss', 'modal');
     closeButton.innerHTML = '&times;';
-
+    closeButton.onclick = (e) => {
+        e.preventDefault()
+        $(`#${modal.id}`).modal('hide')
+    }
     // Append title and close button to the header
     modalHeader.appendChild(modalTitle);
     modalHeader.appendChild(closeButton);
@@ -173,7 +178,10 @@ function createModal(form) {
     closeFooterButton.className = 'btn btn-secondary';
     closeFooterButton.setAttribute('data-dismiss', 'modal');
     closeFooterButton.textContent = 'Close';
-
+    closeFooterButton.onclick = (e) => {
+        e.preventDefault()
+        $(`#${modal.id}`).modal('hide')
+    }
     // Append close button to the footer
     modalFooter.appendChild(closeFooterButton);
 
