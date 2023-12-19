@@ -76,18 +76,18 @@ function createExpenseForm({id, expense, des}) {
             }
             localStorage.setItem(expenseObj.id,JSON.stringify(expenseObj))
             li = document.createElement('li')
-            // li.className = 'text-info bg-dark'
+            li.className = 'text-info m-5'
             data = JSON.parse(localStorage.getItem(counter++))
             li.appendChild(document.createTextNode(`${data.expense} : ${data.des}`))
             li.id = `${data.id}`
             li.appendChild(createModal(createExpenseForm(data)))
         }
             let btnDelete = document.createElement('button')
-            btnDelete.className = 'btn btn-danger btn-sm float-right delete'
+            btnDelete.className = 'btn btn-danger btn-sm m-1 float-right delete'
             btnDelete.appendChild(document.createTextNode('Delete Expense'))
             li.appendChild(btnDelete)
             let btnEdit = document.createElement('button')
-            btnEdit.className = 'btn btn-success btn-sm float-right edit'
+            btnEdit.className = 'btn btn-success btn-sm m-1 float-right edit'
             btnEdit.appendChild(document.createTextNode('Edit Expense'))
             li.appendChild(btnEdit)
             details.appendChild(li)
